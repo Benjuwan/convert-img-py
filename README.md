@@ -45,4 +45,3 @@ cd utils
 
 python3 main.py 960 # 960 の部分は任意のリサイズ幅（ピクセル単位）を指定
 ```
-# convert-img-py
