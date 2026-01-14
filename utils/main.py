@@ -3,14 +3,15 @@ import sys  # コマンドライン引数を操作するためのモジュール
 
 from convert_img import convert_img
 
-# 画像素材フォルダのパス
-FILE_DIR: str = "../src"
+# 画像素材フォルダのパス（※`_dist`は処理画像の保存場所）
+FILE_DIR: str = "../src/_dist"
 
 if len(sys.argv) < 2:
     # ルートに FILE_DIR フォルダが存在しない場合のみ作成
     if os.path.exists(FILE_DIR) is False:
         print(f"{FILE_DIR} フォルダが存在しないため作成しました")
-        os.mkdir(FILE_DIR)
+        # `.makedirs`： 再帰的にフォルダ作成を実施（`src`dir がなければソレを作ってから`_dist`dir を作成する）
+        os.makedirs(FILE_DIR)
         sys.exit()
     else:
         print("リサイズ希望数値（px）を入力してください。例：960")

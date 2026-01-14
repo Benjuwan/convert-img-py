@@ -1,4 +1,5 @@
 from PIL import Image  # 画像を扱う非標準ライブラリ
+import shutil
 
 from rename_img import rename_jpg
 from get_resize_int import get_resize_int
@@ -10,7 +11,10 @@ def resize_jpg(img_file: str | None = None) -> None:
         return None
 
     try:
-        new_filepath = rename_jpg(img_file)
+        # 加工元ファイルをコピー（このコピーファイルが処理対象となる）
+        img_file_dist = shutil.copy2(img_file, "../src/_dist")
+
+        new_filepath = rename_jpg(img_file_dist)
 
         # with文で（リネーム済みパスの）jpgファイルを画像データとして開く
         # with文により処理後自動で閉じられる
