@@ -6,7 +6,7 @@ from tqdm import tqdm  # プログレスバーを表示するための非標準�
 from resize_img import resize_jpg
 
 
-def convert_img(file_dir: str | None = None) -> None:
+def convert_img(file_dir: str | None = None, FILE_DIR: str | None = None) -> None:
     if file_dir is None:
         return
 
@@ -29,6 +29,11 @@ def convert_img(file_dir: str | None = None) -> None:
 
         if len(images) == 0:
             print(f"{file_dir} フォルダに画像が見当たりません。")
+            sys.exit()
+
+        if FILE_DIR and os.path.exists(FILE_DIR) is False:
+            print(f"{FILE_DIR} フォルダが存在しないため作成しました_2")
+            os.makedirs(FILE_DIR)
             sys.exit()
 
         # 画像のリサイズ処理

@@ -3,6 +3,7 @@ import shutil
 
 from rename_img import rename_jpg
 from get_resize_int import get_resize_int
+from adjustedfile_move_to_numbering_dir import adjustedfile_move_to_numbering_dir
 
 
 # リサイズ処理
@@ -14,11 +15,14 @@ def resize_jpg(img_file: str | None = None) -> None:
         # 加工元ファイルをコピー（このコピーファイルが処理対象となる）
         img_file_dist = shutil.copy2(img_file, "../src/_dist")
 
-        new_filepath = rename_jpg(img_file_dist)
+        renamed_file: str | None = rename_jpg(img_file_dist)
+
+        if renamed_file is None:
+            return
 
         # with文で（リネーム済みパスの）jpgファイルを画像データとして開く
         # with文により処理後自動で閉じられる
-        with Image.open(new_filepath) as img:
+        with Image.open(renamed_file) as img:
             width = get_resize_int()  # リサイズ値
 
             if width is None:
@@ -41,12 +45,14 @@ def resize_jpg(img_file: str | None = None) -> None:
             # リサイズ処理した内容で保存
             resized_img.save(
                 # 第1引数：保存先のファイルパス（必須）. 以下引数は全てオプション
-                new_filepath,  # 変更されたパス（リネーム済みパス）に保存
+                renamed_file,  # 変更されたパス（リネーム済みパス）に保存
                 # optimize ：Trueの場合、ファイルサイズを最適化
                 optimize=True,
                 # 画像解像度をタプル形式で指定(x方向: int, y方向: int)
                 dpi=(72, 72),
             )
+
+            adjustedfile_move_to_numbering_dir(renamed_file)
 
     except Exception as e:
         print(f"リサイズ処理エラー | {e}")

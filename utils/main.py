@@ -21,4 +21,4 @@ elif len(sys.argv) > 2:
     print("指定できるコマンドライン引数（リサイズ希望数値）は1つまでです")
     sys.exit()
 
-convert_img("../src")
+convert_img("../src", FILE_DIR)
