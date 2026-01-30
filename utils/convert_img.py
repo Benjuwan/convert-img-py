@@ -4,6 +4,7 @@ import glob  # 指定したディレクトリにあるファイルの一覧を�
 from tqdm import tqdm  # プログレスバーを表示するための非標準ライブラリ
 
 from resize_img import resize_jpg
+from adjustedfile_copy_to_numbering_dir import adjustedfile_copy_to_numbering_dir
 
 
 def convert_img(file_dir: str | None = None, FILE_DIR: str | None = None) -> None:
@@ -27,18 +28,21 @@ def convert_img(file_dir: str | None = None, FILE_DIR: str | None = None) -> Non
         # 安定した順序で処理するためソート
         images.sort()
 
-        if len(images) == 0:
-            print(f"{file_dir} フォルダに画像が見当たりません。")
-            sys.exit()
-
         if FILE_DIR and os.path.exists(FILE_DIR) is False:
             print(f"{FILE_DIR} フォルダが存在しないため作成しました_2")
             os.makedirs(FILE_DIR)
             sys.exit()
 
+        if len(images) == 0:
+            print(f"{file_dir} フォルダに画像が見当たりません。")
+            sys.exit()
+
         # 画像のリサイズ処理
         for img in tqdm(images, desc="画像を処理中"):
             resize_jpg(img)
+
+        # リネーム及びリサイズ後に、ファイル名の重複をチェックして同一ファイル名の画像データは別フォルダへ移動（`src/_dist/_numbering`）させる
+        adjustedfile_copy_to_numbering_dir()
 
     except Exception as e:
         print(f"コアモジュール`convert_img`の実行失敗 | {e}")
