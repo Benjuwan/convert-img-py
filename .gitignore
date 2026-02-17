@@ -21,3 +21,5 @@ Thumbs.db
 
 # その他
 src/
+files/
+dist/

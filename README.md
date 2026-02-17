@@ -1,6 +1,7 @@
 # convert-img-py
 ルートの特定フォルダ（`src`）に指定した画像（`jpg`,`png`）のリサイズ及びリネームを実施するPythonスクリプト  
-※プログラム実行前に`src`フォルダを用意せずともプログラム実行時に有無を検知して（無ければ）自動的に作成します
+※プログラム実行前に`src`フォルダを用意せずともプログラム実行時に有無を検知して（無ければ）自動的に作成します  
+※[`画像 -> pdf`変換ツール](./README.md#utilsimg-to-pdf-画像---pdf変換ツール)も用意しています  
 
 > [!NOTE]
 > - 同一ファイル名の画像データはリネーム及びリサイズ処理後に別途フォルダに移動  
@@ -9,6 +10,21 @@
 ```bash
 # プログラム実行時は一つの引数（希望するリサイズ数値の入力）が必要です
 python main.py 960
+```
+
+## `utils/img-to-pdf`： `画像 -> pdf`変換ツール
+`files` ディレクトリ内の画像（.jpg, .jpeg, .png）をPDFに変換（出力先は`dist`フォルダ）するツール
+
+- `utils\img-to-pdf\image_to_pdf.py`：画像を個別pdfに変換
+```py
+# convert-img-py\utils\img-to-pdf で以下コマンドを実行
+python image_to_pdf.py
+```
+
+- `utils\img-to-pdf\images_to_single_pdf.py`：複数画像を一つのpdfに変換
+```py
+# convert-img-py\utils\img-to-pdf で以下コマンドを実行
+python images_to_single_pdf.py
 ```
 
 ## 使用方法
